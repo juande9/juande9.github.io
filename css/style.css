@@ -1,0 +1,94 @@
+* {
+  font-family: "Lato", sans-serif; }
+
+/* Modal */
+.swal2-title {
+  padding: 0 1em 0 !important; }
+
+.datosModal {
+  display: flex;
+  justify-content: space-evenly; }
+  .datosModal div {
+    display: flex;
+    flex-direction: column; }
+    .datosModal div strong {
+      padding-bottom: 0.3em;
+      font-size: 0.8em;
+      color: #828282; }
+    .datosModal div span {
+      font-style: italic; }
+
+#galeriaBufandas {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; }
+
+.galeriaBufandas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; }
+
+.contenedorModal {
+  width: 80%;
+  min-width: 32em !important;
+  max-width: 50em !important; }
+
+h2 strong {
+  font-weight: 2em; }
+
+.escudoModal {
+  height: 1.5em;
+  margin-right: 0.5em; }
+
+/* Mapa */
+.escudosMapa {
+  height: 2.2em;
+  -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
+  display: none; }
+  .escudosMapa:hover {
+    height: 5em;
+    transition-duration: 500ms;
+    z-index: 1000 !important; }
+
+.iconoBandera {
+  border-radius: 20px;
+  height: 1.5em;
+  width: 1.5em;
+  -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4)); }
+
+.banderaZoom {
+  display: none; }
+
+.escudoTabla {
+  height: 1.5em; }
+
+.linktraductor {
+  color: white;
+  text-decoration: none; }
+  .linktraductor:hover {
+    text-decoration: underline;
+    color: #b8b8b8; }
+
+nav .offcanvas li a {
+  text-transform: uppercase;
+  text-align: end;
+  font-size: 1.2em; }
+
+.containerBufanda {
+  display: flex;
+  flex-direction: column; }
+  .containerBufanda .decada {
+    padding: 0.5em; }
+  .containerBufanda .thumbnailImg {
+    margin: 0.5em;
+    max-height: 200px;
+    padding: 0.5em;
+    object-fit: contain;
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.05); }
+  .containerBufanda:hover {
+    background-color: #fafafa; }

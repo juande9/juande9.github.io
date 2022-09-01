@@ -1,0 +1,295 @@
+{
+    "response": [
+        {
+            "team": {
+                "id": 1,
+                "name": "Barcelona",
+                "code": "BAR",
+                "league": "La Liga",
+                "country": "Spain",
+                "founded": 1899,
+                "logo": "./img/escudos/barcelona.svg"
+            },
+            "venue": {
+                "id": 18630,
+                "name": "Spotify Camp Nou",
+                "address": "Carrer d&apos;Arístides Maillol",
+                "city": "Barcelona",
+                "capacity": 99787,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/18630.png"
+            }
+        },
+        {
+            "team": {
+                "id": 2,
+                "name": "Sevilla",
+                "code": "SEV",
+                "league": "La Liga",
+                "country": "Spain",
+                "founded": 1890,
+                "logo": "./img/escudos/sevilla.svg"
+            },
+            "venue": {
+                "id": 1494,
+                "name": "Estadio Ramón Sánchez Pizjuán",
+                "address": "Avenida de Eduardo Dato",
+                "city": "Sevilla",
+                "capacity": 48649,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/1494.png"
+            }
+        },
+        {
+            "team": {
+                "id": 3,
+                "name": "Celta Vigo",
+                "code": "CEL",
+                "league": "La Liga",
+                "country": "Spain",
+                "founded": 1923,
+                "logo": "./img/escudos/celtaVigo.svg"
+            },
+            "venue": {
+                "id": 1467,
+                "name": "Abanca-Balaídos",
+                "address": "Avenida de Balaídos",
+                "city": "Vigo",
+                "capacity": 31800,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/1467.png"
+            }
+        },
+        {
+            "team": {
+                "id": 4,
+                "name": "Real Madrid",
+                "code": "REA",
+                "league": "La Liga",
+                "country": "Spain",
+                "founded": 1902,
+                "logo": "./img/escudos/realMadrid.svg"
+            },
+            "venue": {
+                "id": 5,
+                "name": "Estadio Santiago Bernabéu",
+                "address": "Avenida de Concha Espina 1, Chamartín",
+                "city": "Madrid",
+                "capacity": 85454,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/1456.png"
+            }
+        },
+        {
+            "team": {
+                "id": 6,
+                "name": "Deportivo La Coruña",
+                "code": "COR",
+                "league": "Primera División RFEF",
+                "country": "Spain",
+                "founded": 1906,
+                "logo": "./img/escudos/deporCoruna.svg"
+            },
+            "venue": {
+                "id": 1471,
+                "name": "Estadio Abanca-Riazor",
+                "address": "Calle Manuel Murguía",
+                "city": "La Coruña",
+                "capacity": 34611,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/1471.png"
+            }
+        },
+        {
+            "team": {
+                "id": 7,
+                "name": "Inter de Milán",
+                "code": "INT",
+                "league": "Serie A",
+                "country": "Italy",
+                "founded": 1908,
+                "logo": "https://media.api-sports.io/football/teams/505.png"
+            },
+            "venue": {
+                "id": 907,
+                "name": "Stadio Giuseppe Meazza",
+                "address": "Via Piccolomini 5",
+                "city": "Milano",
+                "capacity": 80018,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/907.png"
+            }
+        },
+        {
+            "team": {
+                "id": 8,
+                "name": "AC Milan",
+                "code": "MIL",
+                "league": "Serie A",
+                "country": "Italy",
+                "founded": 1899,
+                "logo": "./img/escudos/milan.svg"
+            },
+            "venue": {
+                "id": 907,
+                "name": "Stadio Giuseppe Meazza",
+                "address": "Via Piccolomini 5",
+                "city": "Milano",
+                "capacity": 80018,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/907.png"
+            }
+        },
+        {
+            "team": {
+                "id": 9,
+                "name": "Monaco",
+                "code": "MON",
+                "league": "Ligue 1",
+                "country": "France",
+                "founded": 1919,
+                "logo": "https://media.api-sports.io/football/teams/91.png"
+            },
+            "venue": {
+                "id": 659,
+                "name": "Stade Louis II",
+                "address": "7, avenue des Castelans",
+                "city": "Monaco",
+                "capacity": 18523,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/659.png"
+            }
+        },
+        {
+            "team": {
+                "id": 13,
+                "name": "Manchester United",
+                "code": "MUN",
+                "league": "Premier League",
+                "country": "United Kingdom",
+                "founded": 1878,
+                "logo": "./img/escudos/manunited.svg"
+            },
+            "venue": {
+                "id": 556,
+                "name": "Old Trafford",
+                "address": "Sir Matt Busby Way",
+                "city": "Manchester",
+                "capacity": 76212,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/556.png"
+            }
+        },
+        {
+            "team": {
+                "id": 10,
+                "name": "Parma",
+                "code": "PAR",
+                "league": "Serie B",
+                "country": "Italy",
+                "founded": 1913,
+                "logo": "https://media.api-sports.io/football/teams/523.png"
+            },
+            "venue": {
+                "id": 921,
+                "name": "Stadio Ennio Tardini",
+                "address": "Via Partigiani d&apos;Italia, 1",
+                "city": "Parma",
+                "capacity": 21473,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/921.png"
+            }
+        },
+        {
+            "team": {
+                "id": 11,
+                "name": "Fiorentina",
+                "code": "FIO",
+                "league": "Serie A",
+                "country": "Italy",
+                "founded": 1926,
+                "logo": "https://media.api-sports.io/football/teams/502.png"
+            },
+            "venue": {
+                "id": 902,
+                "name": "Stadio Artemio Franchi",
+                "address": "Viale Manfredo Fanti 14",
+                "city": "Firenze",
+                "capacity": 43147,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/902.png"
+            }
+        },
+        {
+            "team": {
+                "id": 12,
+                "name": "Independiente",
+                "code": "IND",
+                "league": "Primera División de Argentina",
+                "country": "Argentina",
+                "founded": 1905,
+                "logo": "./img/escudos/independiente.svg"
+            },
+            "venue": {
+                "id": 7131,
+                "name": "Estadio Libertadores de América",
+                "address": "Calle Ricardo Enrique Bochini (ex. Almirante Cordero) 751/83 esq. Alsina",
+                "coord": {
+                    "lat": "-34.670",
+                    "lgn": "-58.370"
+                },
+                "city": "Avellaneda, Provincia de Buenos Aires",
+                "capacity": 52364,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/7131.png"
+            }
+        },
+        {
+            "team": {
+                "id": 13,
+                "name": "Perugia",
+                "code": "PER",
+                "league": "Serie B",
+                "country": "Italy",
+                "founded": 1905,
+                "logo": "https://media.api-sports.io/football/teams/524.png"
+            },
+            "venue": {
+                "id": 922,
+                "name": "Stadio Renato Curi",
+                "address": "Via Pietro Conti",
+                "coord": {
+                    "lat": "43.106",
+                    "lgn": "12.357"
+                },
+                "city": "Perugia",
+                "capacity": 23625,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/922.png"
+            }
+        },
+        {
+            "team": {
+                "id": 14,
+                "name": "Juventus",
+                "code": "JUV",
+                "country": "Italy",
+                "founded": 1897,
+                "logo": "https://media.api-sports.io/football/teams/496.png"
+            },
+            "venue": {
+                "id": 909,
+                "name": "Allianz Stadium",
+                "address": "Strada Comunale di Altessano 131",
+                "coord": {
+                    "lat": "45.1096",
+                    "lgn": "7.6412"
+                },
+                "city": "Torino",
+                "capacity": 45666,
+                "surface": "grass",
+                "image": "https://media.api-sports.io/football/venues/909.png"
+            }
+        }
+    ]
+}

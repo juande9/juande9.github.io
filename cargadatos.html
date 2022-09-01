@@ -1,0 +1,143 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carga de Datos - Fútbol en Bufandas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <meta name="description"
+        content="El futbol y la memoria se ven representadas en esta colección de bufandas de este hermoso deporte.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <script src="js/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/lang/ES.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCETFPaw2Nv7bol2wk4qnpfh_lcvnkMlFc"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<header>
+    <nav class="navbar navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html"><img src="https://via.placeholder.com/50x50"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+                aria-controls="offcanvasScrolling"><span class="navbar-toggler-icon"></span></button>
+
+            <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+                id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header">
+                    <a class="navbar-brand" href="index.html"><img src="https://via.placeholder.com/50x50"></a>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body bg-dark">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Volver al mapa</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </nav>
+</header>
+
+<body>
+    <section class="container">
+        <h1 class="py-3">Ingresar equipo a la base de datos</h1>
+        <form class="form " id="ingresoClub">
+            <div class="form-group">
+                <label for="id">Id</label>
+                <input type="number" class="form-control" id="inputId">
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre">
+                <div class="error"></div>
+            </div>
+            <div class="form-group">
+                <label for="pais">Pais</label>
+                <select class="form-control" id="selectorPais"></select>
+            </div>
+            <div class="form-group">
+                <label for="liga">Liga</label>
+                <select class="form-control" id="selectorLigas"></select>
+            </div>
+            <div class="form-group">
+                <label for="fundacion">Año de Fundación</label>
+                <input type="number" class="form-control" id="inputFundacion">
+                <div id="errorFundacion"></div>
+            </div>
+            <div class="form-group">
+                <label for="escudo">Cargué el logo</label>
+                <input type="file" accept="image/svg" class="form-control" id="inputEscudo">
+                <small id="observacionImg" class="form-text text-muted">El archivo debe ser svg.</small>
+            </div>
+            <div class="form-group">
+                <label for="estadio">Nombre del estadio</label>
+                <div class="row">
+                    <div class="col-9">
+                        <input type="text" class="form-control" id="inputEstadio">
+                        <div id="errorObtCoordenadas"></div>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" id="obtenerCoordenadas" class="btn btn-secondary" disabled>
+                            Obtener Coordenadas
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label for="coordenadas">Coordenadas del estadio</label>
+                <div class="col-auto">
+                    <input type="number" class="form-control" placeholder="Latitud" id="inputLat" step=".000001">
+                </div>
+                <div class="col-auto">
+                    <input type="number" class="form-control" placeholder="Longitud" id="inputLng" step=".000001">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-secondary my-3 btn-block">Cargar</button>
+                <p id="estadoCarga"></p>
+            </div>
+        </form>
+        <form class="form" id="ingresoBufanda">
+
+        </form>
+    </section>
+    <section class="container">
+        <h2 class="my-3">Equipos ya cargados</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col-3" id="ordenarEquipo">Nombre <i class="bi bi-arrow-down-short"></i></th>
+                    <th scope="col">Liga</th>
+                    <th scope="col">Pais</th>
+                    <th scope="col">Año</th>
+                    <th scope="col">Estadio</th>
+                    <th scope="col">Lat</th>
+                    <th scope="col">Long</th>
+                    <th scope="col">Capacidad</th>
+                    <th scope="col">Logo</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="listadoEquipos">
+            </tbody>
+        </table>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="js/ClassEquipos&Bufanda.js"></script>
+    <script src="js/scriptmain.js"></script>
+    <script src="js/scriptBufanda.js"></script>
+</body>
+
+</html>

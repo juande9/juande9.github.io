@@ -1,0 +1,113 @@
+$fuenteSerif: 'Playfair Display', serif;
+$fuenteSansSerif: "Lato", sans-serif;
+
+* {
+    font-family: $fuenteSansSerif;
+}
+
+/* Modal */
+
+.swal2-title {
+    padding: 0 1em 0 !important;
+}
+
+.datosModal {
+    display: flex;
+    justify-content: space-evenly;
+
+    div {
+        display: flex;
+        flex-direction: column;
+
+        strong {
+            padding-bottom: 0.3em;
+            font-size: 0.8em;
+            color: #828282;
+        }
+
+        span {
+            font-style: italic;
+        }
+    }
+}
+
+#galeriaBufandas {
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.galeriaBufandas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.contenedorModal {
+    width: 80%;
+    min-width: 32em !important;
+    max-width: 50em !important;
+}
+
+h2 strong {
+    font-weight: 2em;
+}
+
+.escudoModal {
+    height: 1.5em;
+    margin-right: 0.5em;
+}
+
+
+/* Mapa */
+
+.escudosMapa {
+    height: 2.2em;
+    -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .40));
+    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .40));
+    display: none;
+
+    &:hover {
+        height: 5em;
+        transition-duration: 500ms;
+        z-index: 1000 !important;
+    }
+}
+
+.iconoBandera {
+    border-radius: 20px;
+    height: 1.5em;
+    width: 1.5em;
+    -webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .40));
+    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, .40));
+}
+
+.banderaZoom {
+    display: none;
+}
+
+
+//Tabla Carga de datos//
+
+.escudoTabla {
+    height: 1.5em;
+}
+
+//Navbar//
+
+.linktraductor {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+        color: rgb(184, 184, 184)
+    }
+}
+
+nav .offcanvas li a {
+    text-transform: uppercase;
+    text-align: end;
+    font-size: 1.2em;
+}
