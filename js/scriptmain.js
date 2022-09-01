@@ -8,23 +8,27 @@ let inputEstadio = document.getElementById("inputEstadio")
 let ingresoClub = document.getElementById("ingresoClub")
 let inputLat = document.getElementById("inputLat")
 let inputLng = document.getElementById("inputLng")
+let inputCapacidad = document.getElementById("inputCapacidad")
 let errorId = document.getElementById("errorId")
 let errorObtCoordenadas = document.getElementById("errorObtCoordenadas")
 let error = document.getElementsByClassName("error")
 let tabla = document.getElementById("listadoEquipos")
-let estadoCarga = document.getElementById("estadoCarga")
 let botonCoordenadas = document.getElementById("obtenerCoordenadas")
 
 /**
- * Fetch Local al JSON.
+ * Fetch Local al JSON. Checkea también si hay o no datos guardados en el LocalStore.
  */
 function buscarBaseDatos() {
     fetch(`./json/equipos.json`)
         .then(response => response.json())
         .then(response => {
-            console.dir("Base de datos cargada con exito.")
-            const equiposLocal = JSON.parse(localStorage.getItem('equiposNuevos'));
-            const equipos = response[`response`];
+            const equiposLocal = JSON.parse(localStorage.getItem('equiposNuevo'));
+            const equiposJSON = response[`response`];
+
+            equiposLocal ? equipos = equiposJSON.concat(equiposLocal) : equipos = equiposJSON
+
+            /* Equipos con bufandas cargadas. Si encuentra alguna, imprime el pais y el escudo en el mapa.
+            Sino, por mas de que el equipo este cargado, este no aparece.*/
             const equiposEncontrados = []
 
             for (i = 0; i < equiposconBufandas.length; i++) {
@@ -35,11 +39,12 @@ function buscarBaseDatos() {
                 let clubEncontrado = equipos.find(e => e.team.name === club)
                 equiposEncontrados.push(clubEncontrado)
             }
-
+            
+            /*Genera los selectores utilizando los paises del GEOJson*/
             generaSelectors(equipos)
 
-            tabla ? mostrarEquiposTabla(equipos, equiposLocal) & btnLatLgnInput() & checkId(equipos, equiposLocal)
-                : mostrarEquiposMapa(equipos) & mostrarPaisesMapa(equipos)
+            tabla ? mostrarEquiposTabla(equipos) & btnLatLgnInput() & checkId(equipos)
+                : mostrarEquiposMapa(equiposEncontrados) & mostrarPaisesMapa(equiposEncontrados)
 
         })
         .catch(error => console.log('error', error));
@@ -79,110 +84,62 @@ function generaSelectors(arrayClubesEncontrados) {
 }
 
 /**
- * Imprime los equipos en el DOM.
- * @param {array} arrayClubes Se obtiene del JSON
+ * Imprime los equipos en la tablam.
+ * @param {*} arrayClubesJSON Se obtiene del JSON
+ * @param {*} arrayClubesLocal Se obtiene del LocalStorage
  */
-function mostrarEquiposTabla(arrayClubesJSON, arrayClubesLocal) {
+function mostrarEquiposTabla(equipos) {
     tabla.innerHTML = ""
-    /*Muestra equipos del JSON*/
-    for (let i = 0; i < arrayClubesJSON.length; i++) {
-        let pos = arrayClubesJSON.indexOf(arrayClubesJSON[i])
+    for (let i = 0; i < equipos.length; i++) {
         let row = document.createElement("tr")
-        let celdaElim = document.createElement("td")
         let celdaAgregar = document.createElement("td")
-        let botonEliminar = document.createElement("button")
         let botonAgregarBufanda = document.createElement("button")
-        botonEliminar.className = `btn btn-secondary eliminar`
-        botonEliminar.innerHTML = `<i class="bi bi-x"></i>`
         botonAgregarBufanda.innerHTML = `<i class="bi bi-bookmark-plus-fill"></i>`
         botonAgregarBufanda.className = `btn btn-secondary btn-sm`
         tabla.append(row)
         row.innerHTML = `
-        <td scope="row">${arrayClubesJSON[i].team.id}</td>
-        <td>${arrayClubesJSON[i].team.name}</td>
-        <td>${arrayClubesJSON[i].team.league}</td>
-        <td>${arrayClubesJSON[i].team.country}</td>
-        <td>${arrayClubesJSON[i].team.founded}</td>
-        <td>${arrayClubesJSON[i].venue.name}</td>
+        <td scope="row">${equipos[i].team.id}</td>
+        <td>${equipos[i].team.name}</td>
+        <td>${equipos[i].team.league}</td>
+        <td>${equipos[i].team.country}</td>
+        <td>${equipos[i].team.founded}</td>
+        <td>${equipos[i].venue.name}</td>
         <td></td>
         <td></td>
-        <td>${arrayClubesJSON[i].venue.capacity}</td>
-        <td><img class="escudoTabla" src=${arrayClubesJSON[i].team.logo}></td>`
+        <td>${equipos[i].venue.capacity}</td>
+        <td><img class="escudoTabla" src=${equipos[i].team.logo}></td>`
 
-        obtenerCoordenadas(arrayClubesJSON[i], ({ latitud, longitud }) => {
+        obtenerCoordenadas(equipos[i], ({ latitud, longitud }) => {
             if (latitud == null && longitud == null) {
-                row.children[6].innerText = `${parseFloat(arrayClubesJSON[i].venue.coord.lat)}`
-                row.children[7].innerText = `${parseFloat(arrayClubesJSON[i].venue.coord.lgn)}`
+                row.children[6].innerText = `${parseFloat(equipos[i].venue.lat)}`
+                row.children[7].innerText = `${parseFloat(equipos[i].venue.lng)}`
             }
             else {
                 row.children[6].innerText = `${parseFloat(latitud.toFixed(4))}`
                 row.children[7].innerText = `${parseFloat(longitud.toFixed(4))}`
             }
+            ingresoClub.onsubmit = (e) => agregarEquipo(e)
         })
-
-        row.append(celdaElim)
-        celdaElim.append(botonEliminar)
-        botonEliminar.onclick = () => {
-            arrayClubesJSON.splice(pos, 1)
-            row.remove()
-        }
 
         row.append(celdaAgregar)
         celdaAgregar.append(botonAgregarBufanda)
-        botonAgregarBufanda.onclick = () => agregarBufanda(arrayClubesJSON[i])
-    }
-
-    /*Muestra equipos en LocalStorage*/
-    if (arrayClubesLocal) {
-        for (let i = 0; i < arrayClubesLocal.length; i++) {
-            console.log(arrayClubesLocal)
-            let pos = arrayClubesLocal.indexOf(arrayClubesLocal[i])
-            let row = document.createElement("tr")
-            let celdaElim = document.createElement("td")
-            let celdaAgregar = document.createElement("td")
-            let botonEliminar = document.createElement("button")
-            let botonAgregarBufanda = document.createElement("button")
-            botonEliminar.className = `btn btn-secondary eliminar`
-            botonEliminar.innerHTML = `<i class="bi bi-x"></i>`
-            botonAgregarBufanda.innerHTML = `<i class="bi bi-bookmark-plus-fill"></i>`
-            botonAgregarBufanda.className = `btn btn-secondary btn-sm`
-            tabla.append(row)
-            row.innerHTML = `
-        <td scope="row">${arrayClubesLocal[i].id}</td>
-        <td>${arrayClubesLocal[i].nombre}</td>
-        <td>${arrayClubesLocal[i].league}</td>
-        <td>${arrayClubesLocal[i].country}</td>
-        <td>${arrayClubesLocal[i].founded}</td>
-        <td>${arrayClubesLocal[i].venue}</td>
-        <td></td>
-        <td></td>
-        <td>${""}</td>
-        <td><img class="escudoTabla" src=${arrayClubesLocal[i].logo}></td>`
-
-            obtenerCoordenadas(arrayClubesLocal[i], ({ latitud, longitud }) => {
-                if (latitud == null && longitud == null) {
-                    row.children[6].innerText = `${parseFloat(arrayClubesLocal[i].lat)}`
-                    row.children[7].innerText = `${parseFloat(arrayClubesLocal[i].lng)}`
-                }
-                else {
-                    row.children[6].innerText = `${parseFloat(latitud.toFixed(4))}`
-                    row.children[7].innerText = `${parseFloat(longitud.toFixed(4))}`
-                }
-            })
-
-            row.append(celdaElim)
-            celdaElim.append(botonEliminar)
-            botonEliminar.onclick = () => {
-                arrayClubesLocal.splice(pos, 1)
-                row.remove()
-            }
-
-            row.append(celdaAgregar)
-            celdaAgregar.append(botonAgregarBufanda)
-            botonAgregarBufanda.onclick = () => agregarBufanda(arrayClubesLocal[i])
-        }
+        botonAgregarBufanda.onclick = () => agregarBufanda()
     }
 }
+
+/*Toast SweetAlert*/
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
 
 function btnLatLgnInput() {
     /**
@@ -207,8 +164,10 @@ function btnLatLgnInput() {
                 inputLat.value = latitud.toFixed(4),
                     inputLng.value = longitud.toFixed(4),
                     botonCoordenadas.innerHTML = "Obtener Coordenadas"
-                errorObtCoordenadas.innerText = "Se ha completado la busqueda con éxito."
-                errorObtCoordenadas.style.color = "green"
+                Toast.fire({
+                    icon: 'success',
+                    html: `Se ha completado la busqueda con éxito.`,
+                })
             }, 2000)
         )
     })
@@ -242,21 +201,30 @@ function obtenerCoordenadas(inputAddress, callback) {
 function buscarCoordenadas(inputAddress, callback) {
     geocoder.geocode({ 'address': inputAddress },
         function (results, status) {
-            errorObtCoordenadas.innerText = "Buscando..."
-            errorObtCoordenadas.style.color = "black"
+            Toast.fire({
+                icon: 'info',
+                html: `Buscando...`,
+            })
             if (status == google.maps.GeocoderStatus.OK) {
                 let latitud = results[0].geometry.location.lat();
                 let longitud = results[0].geometry.location.lng();
                 callback({ latitud, longitud })
             } else if (status = google.maps.GeocoderStatus.ZERO_RESULTS) {
                 setTimeout(function () {
-                    errorObtCoordenadas.innerText = "No se encontraron resultados válidos. Chequee la ortografía."
-                    errorObtCoordenadas.style.color = "red"
+                    Toast.fire({
+                        icon: 'error',
+                        html: `Error al obtener las coordenadas. Revisar la ortografía.`,
+                    })
                     botonCoordenadas.innerHTML = "Obtener Coordenadas"
                 }, 2000)
             }
         })
 }
+
+/**
+ * Función que agrega equipo de forma local en el LocalStorage.
+ * Solamente permite uno porque se sobreescriben.
+ */
 
 function agregarEquipo(e) {
     e.preventDefault();
@@ -269,20 +237,27 @@ function agregarEquipo(e) {
     venue = checkVacio(inputEstadio.value)
     lat = checkVacio(inputLat.value)
     lng = checkVacio(inputLng.value)
-    console.log(id, nombre, league, country, founded, logo, venue, lat, lng)
-    if (id && nombre && league && country && founded && logo && venue && lat && lng) {
+    capacity = checkVacio(inputCapacidad.value)
+    if (id && nombre && league && country && founded && logo && venue && lat && lng && capacity) {
         const equiposNuevos = []
-        const newEquipo = new Equipo(id, nombre, country, league, founded, logo, venue, lat, lng)
+        const newEquipo = new Equipo(id, nombre, country, league, founded, logo, venue, lat, lng, capacity)
         equiposNuevos.push(newEquipo)
         inputId.value++
-        estadoCarga.innerText = `El equipo ${nombre} cargado correctamente.`
-        estadoCarga.style.color = "green"
-        localStorage.setItem('equiposNuevos', JSON.stringify(equiposNuevos));
+        Toast.fire({
+            icon: 'success',
+            html: `El equipo ${nombre} se cargo correctamente`,
+        })
+        localStorage.setItem('equiposNuevo', JSON.stringify(equiposNuevos));
+        buscarBaseDatos()
     } else {
-        estadoCarga.innerHTML = "Hubo un error al cargar el equipo. Faltan datos. Intente nuevamente."
-        estadoCarga.style.color = "red"
+        Toast.fire({
+            icon: 'error',
+            html: `Hubo un error al cargar el equipo`,
+        })
     }
 }
+
+/* Devuelve el proxímo id disponible*/
 
 function checkId(arrayClubes, arrayLocal) {
     if (arrayLocal != null) {
@@ -296,10 +271,14 @@ function checkId(arrayClubes, arrayLocal) {
     }
 }
 
+/* Corrobora que el input no este vacio.*/
+
 function checkVacio(valor) {
     const val = valor !== "" ? valor : false
     return val
 }
+
+/* Corrobora que la fundación no sea menor a 1800*/
 
 function checkFundacion(numero) {
     let errorFundacion = document.getElementById("errorFundacion");
@@ -308,32 +287,11 @@ function checkFundacion(numero) {
         return numero
     } else {
         errorFundacion.innerHTML = "<b>El número es invalido. (Mayor a 1800)</b>"
+        errorFundacion.style.color = "red"
     }
 }
 
-function ordenAlfabetico(arrayClubes) {
-    arrayClubes.sort((a, b) => {
-        if (a.nombre > b.nombre) {
-            return 1;
-        }
-        if (a.nombre < b.nombre) {
-            return -1;
-        }
-        return 0;
-    })
-    ordenarEquipo.innerHTML =
-        `Nombre <i class="bi bi-arrow-up-short"></i>`
-    ordenarEquipo.onclick = () => invertir()
-    mostrarEquiposTabla()
-}
-
-function invertir(arrayClubes) {
-    arrayClubes.reverse()
-    ordenarEquipo.innerHTML =
-        `Nombre <i class="bi bi-arrow-down-short"></i>`
-    ordenarEquipo.onclick = () => ordenAlfabetico()
-    mostrarEquiposTabla()
-}
+/* Elimina el diseño por defecto de Bootstrap en los inputs.*/
 
 function diseñoInputs() {
     let inputs = document.querySelectorAll(`.form-control`)
@@ -349,9 +307,22 @@ function diseñoInputs() {
     }
 }
 
+/* Funcion que agregaría bufanda nueva. Coming Soon*/
+
+function agregarBufanda() {
+    Swal.fire({
+        icon: 'error',
+        html:
+            `Esta funcion todavia no existe :(`,
+        customClass: {
+            popup: 'contenedorModal',
+        },
+        imageHeight: `8em`,
+        focusConfirm: false,
+        confirmButtonText: `Cerrar`,
+        confirmButtonColor: `#adb5bd`,
+    })
+}
+
 buscarBaseDatos()
-ingresoClub.onsubmit = (e) => agregarEquipo(e)
-/* ordenarEquipo = document.getElementById("ordenarEquipo")
-ordenarEquipo.style.cursor = "pointer"
-ordenarEquipo.onclick = () => ordenAlfabetico() */
 diseñoInputs()

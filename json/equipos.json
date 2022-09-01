@@ -234,10 +234,8 @@
                 "id": 7131,
                 "name": "Estadio Libertadores de América",
                 "address": "Calle Ricardo Enrique Bochini (ex. Almirante Cordero) 751/83 esq. Alsina",
-                "coord": {
-                    "lat": "-34.670",
-                    "lgn": "-58.370"
-                },
+                "lat": "-34.670",
+                "lng": "-58.370",
                 "city": "Avellaneda, Provincia de Buenos Aires",
                 "capacity": 52364,
                 "surface": "grass",
@@ -258,10 +256,8 @@
                 "id": 922,
                 "name": "Stadio Renato Curi",
                 "address": "Via Pietro Conti",
-                "coord": {
-                    "lat": "43.106",
-                    "lgn": "12.357"
-                },
+                "lat": "43.106",
+                "lng": "12.357",
                 "city": "Perugia",
                 "capacity": 23625,
                 "surface": "grass",
@@ -273,6 +269,7 @@
                 "id": 14,
                 "name": "Juventus",
                 "code": "JUV",
+                "league": "Serie A",
                 "country": "Italy",
                 "founded": 1897,
                 "logo": "https://media.api-sports.io/football/teams/496.png"
@@ -281,10 +278,8 @@
                 "id": 909,
                 "name": "Allianz Stadium",
                 "address": "Strada Comunale di Altessano 131",
-                "coord": {
-                    "lat": "45.1096",
-                    "lgn": "7.6412"
-                },
+                "lat": "45.1096",
+                "lng": "7.6412",
                 "city": "Torino",
                 "capacity": 45666,
                 "surface": "grass",

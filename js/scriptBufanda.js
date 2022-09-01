@@ -3,6 +3,8 @@ const decada = ["80s", "90s", "00s", "2010s", "2020s"]
 const bufandas = []
 const equiposconBufandas = []
 
+/* Bufandas instanciadas. Puaj*/
+
 const bufEspaña = [
     rma1 = new Bufanda(2, "Real Madrid", decada[2], "rma1/thumbnail.png"),
     rma2 = new Bufanda(3, "Real Madrid", decada[1], "rma2/thumbnail.png"),
@@ -40,6 +42,8 @@ const bufArgentina = [
     cai1 = new Bufanda(20, "Independiente", decada[4], "cai1/thumbnail.webp"),
 ]
 
+/* Unifica a todas las bufandas en un solo array */
+
 bufandas.push(...bufEspaña, ...bufInglaterra, ...bufItalia, ...bufFrancia, ...bufArgentina)
 
 bufandas.forEach(e =>
@@ -49,6 +53,9 @@ bufandas.forEach(e =>
 function checkeaExistencia(club) {
     equiposconBufandas.includes(club.equipo) !== true && equiposconBufandas.push(club.equipo)
 }
+
+
+/* Genera de forma dinamica los modals (pop-up) de cada equipo al hacer click en el escudo.*/
 
 function mostrarModal(club) {
     const bufandasEquipo = bufandas.filter(bufanda => bufanda.equipo == club.team.name)
@@ -74,6 +81,8 @@ function mostrarModal(club) {
     })
 }
 
+/* Genera de forma dinamica la galeria de imagenes con las bufandas de cada club*/
+
 function plantillaBufandas(arrBufandas) {
     let plantilla = ""
     arrBufandas.forEach(e => {
@@ -84,19 +93,4 @@ function plantillaBufandas(arrBufandas) {
         </div>`
     })
     return plantilla
-}
-
-function agregarBufanda() {
-    Swal.fire({
-        html:
-            `Esta funcion todavia no existe :(
-                ${plantillaBufandas(bufandasEquipo)}`,
-        customClass: {
-            popup: 'contenedorModal',
-        },
-        imageHeight: `8em`,
-        focusConfirm: false,
-        confirmButtonText: `Cerrar`,
-        confirmButtonColor: `#adb5bd`,
-    })
 }

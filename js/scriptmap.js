@@ -1,7 +1,8 @@
 let mapa = document.getElementById("map")
 
-mapa && conteinerMapResponsive()
+/* Hace que el height del mapa siempre llegue al fondo del viewport.*/
 
+mapa && conteinerMapResponsive()
 function conteinerMapResponsive() {
     let alturaDelViewport = window.innerHeight;
     let navbarHeight = document.getElementById("navbar").offsetHeight
@@ -12,6 +13,8 @@ window.onresize = () => {
     conteinerMapResponsive()
 }
 
+/* Función de leaflet que genera el mapa */
+
 let map = L.map('map', {
     center: [12, 0],
     tileSize: 512,
@@ -20,6 +23,20 @@ let map = L.map('map', {
     doubleClickZoom: false,
     keyboard: false,
 });
+
+function mostrarPaisesMapa(arrayClubes) {
+    const paisesEncontrados = []
+    /*Encuentra los paises cargados*/
+    for (let i = 0; i < arrayClubes.length; i++) {
+        let pais = arrayClubes[i].team.country
+        if (!paisesEncontrados.includes(pais)) {
+            paisesEncontrados.push(pais)
+        }
+    }
+    obtenerDatosPaises(paisesEncontrados)
+}
+
+/*Genera boton de Reiniciar Zoom */
 
 (function () {
     var control = new L.Control({ position: 'topright' });
@@ -38,9 +55,11 @@ let map = L.map('map', {
     return control;
 }()).addTo(map);
 
+/* Muestra los paises que tengan equipos con bufandas */
+
 function mostrarPaisesMapa(arrayClubes) {
     const paisesEncontrados = []
-    /*Encuentra los paises cargados*/
+    /*Encuentra los paises cargados que tengan equipos con bufandas.*/
     for (let i = 0; i < arrayClubes.length; i++) {
         let pais = arrayClubes[i].team.country
         if (!paisesEncontrados.includes(pais)) {
@@ -49,6 +68,8 @@ function mostrarPaisesMapa(arrayClubes) {
     }
     obtenerDatosPaises(paisesEncontrados)
 }
+
+/*Obtiene la bandera y los limites de cada pais encontrado*/
 
 function obtenerDatosPaises(arrayPaisesEncontrados) {
     fetch(`./json/countries.geojson`)
@@ -138,6 +159,7 @@ function mostrarEquiposMapa(arrayClubes) {
         })
     }
 }
+
 
 let escudos = document.getElementsByClassName("escudosMapa")
 let banderas = document.getElementsByClassName("iconoBandera")
