@@ -15,6 +15,11 @@ window.onresize = () => {
 
 /* Función de leaflet que genera el mapa */
 
+var southWest = L.latLng(90, 180),
+    northEast = L.latLng(-90, -180),
+    bounds = L.latLngBounds(southWest, northEast);
+
+
 let map = L.map('map', {
     center: [12, 0],
     tileSize: 512,
@@ -22,19 +27,9 @@ let map = L.map('map', {
     minZoom: 3,
     doubleClickZoom: false,
     keyboard: false,
+    maxBounds: bounds,
+    maxBoundsViscosity: 0.5
 });
-
-function mostrarPaisesMapa(arrayClubes) {
-    const paisesEncontrados = []
-    /*Encuentra los paises cargados*/
-    for (let i = 0; i < arrayClubes.length; i++) {
-        let pais = arrayClubes[i].team.country
-        if (!paisesEncontrados.includes(pais)) {
-            paisesEncontrados.push(pais)
-        }
-    }
-    obtenerDatosPaises(paisesEncontrados)
-}
 
 /*Genera boton de Reiniciar Zoom */
 
@@ -152,7 +147,7 @@ function mostrarEquiposMapa(arrayClubes) {
                 markerEscudo.on("click", () =>
                     mostrarModal(arrayClubes[i]))
             } else {
-                let markerEscudo = L.marker([parseFloat(arrayClubes[i].venue.coord.lat), parseFloat(arrayClubes[i].venue.coord.lgn)], { icon: myIcon }).addTo(map);
+                let markerEscudo = L.marker([parseFloat(arrayClubes[i].venue.lat), parseFloat(arrayClubes[i].venue.lng)], { icon: myIcon }).addTo(map);
                 markerEscudo.on("click", () =>
                     mostrarModal(arrayClubes[i]))
             }

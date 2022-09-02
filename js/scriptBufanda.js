@@ -35,11 +35,11 @@ const bufItalia = [
 ]
 
 const bufFrancia = [
-    mco1 = new Bufanda(19, "Monaco", decada[1], "mco1/thumbnail.png"),
+    mco1 = new Bufanda(22, "Monaco", decada[1], "mco1/thumbnail.png"),
 ]
 
 const bufArgentina = [
-    cai1 = new Bufanda(20, "Independiente", decada[4], "cai1/thumbnail.webp"),
+    cai1 = new Bufanda(23, "Independiente", decada[4], "cai1/thumbnail.webp"),
 ]
 
 /* Unifica a todas las bufandas en un solo array */
