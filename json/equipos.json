@@ -154,6 +154,8 @@
                 "id": 659,
                 "name": "Stade Louis II",
                 "address": "7, avenue des Castelans",
+                "lat": "43.7276",
+                "lng": "7.4156",
                 "city": "Monaco",
                 "capacity": 18523,
                 "surface": "grass",

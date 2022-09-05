@@ -67,14 +67,14 @@ function mostrarPaisesMapa(arrayClubes) {
 /*Obtiene la bandera y los limites de cada pais encontrado*/
 
 function obtenerDatosPaises(arrayPaisesEncontrados) {
-    fetch(`./json/countries.geojson`)
+    fetch(`./json/paises.geojson`)
         .then(response => response.json())
         .then(response => {
             const paises = response[`features`]
             const paisesEncontrados = arrayPaisesEncontrados
 
             for (i = 0; i < paises.length; i++) {
-                if (paisesEncontrados.some(e => e == paises[i].properties.ADMIN)) {
+                if (paisesEncontrados.some(e => e == paises[i].properties.admin)) {
                     /*Fronteras GeoJson*/
                     let fronteras = paises[i]
                     let frontera = L.geoJSON(fronteras, {
@@ -91,7 +91,7 @@ function obtenerDatosPaises(arrayPaisesEncontrados) {
                     }).addTo(map);
 
                     let iconoBandera = L.icon({
-                        iconUrl: `https://countryflagsapi.com/svg/${paises[i].properties.ADMIN}`,
+                        iconUrl: `https://countryflagsapi.com/svg/${paises[i].properties.admin}`,
                         className: `iconoBandera`,
                         iconAnchor: [15, 15],
                         alt: `${paises[i].properties.ADMIN}`

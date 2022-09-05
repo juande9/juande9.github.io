@@ -69,13 +69,13 @@ function generaSelectors(arrayClubesEncontrados) {
             seleccionLiga += `<option>${element}</option>`)
         selectorLiga.innerHTML = seleccionLiga
 
-        fetch(`./json/countries.geojson`)
+        fetch(`./json/paises.geojson`)
             .then(response => response.json())
             .then(response => {
                 const paises = response[`features`]
                 seleccionPais = ""
                 for (i = 0; i < response[`features`].length; i++) {
-                    pais = paises[i].properties.ADMIN
+                    pais = paises[i].properties.name_es
                     seleccionPais += `<option>${pais}</option>`
                     selectorPais.innerHTML = seleccionPais
                 }
