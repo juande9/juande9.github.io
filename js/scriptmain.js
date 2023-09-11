@@ -179,7 +179,7 @@ function btnLatLgnInput() {
  * @param {string} inputAddress El nombre del estadio
  */
 
-let geocoder = new google.maps.Geocoder();
+/* let geocoder = new google.maps.Geocoder();
 
 function obtenerCoordenadas(inputAddress, callback) {
     geocoder.geocode({ 'address': inputAddress.venue.name },
@@ -196,30 +196,88 @@ function obtenerCoordenadas(inputAddress, callback) {
             }
         }
     )
-}
+} */
 
-function buscarCoordenadas(inputAddress, callback) {
-    geocoder.geocode({ 'address': inputAddress },
-        function (results, status) {
-            Toast.fire({
-                icon: 'info',
-                html: `Buscando...`,
-            })
-            if (status == google.maps.GeocoderStatus.OK) {
-                let latitud = results[0].geometry.location.lat();
-                let longitud = results[0].geometry.location.lng();
-                callback({ latitud, longitud })
-            } else if (status = google.maps.GeocoderStatus.ZERO_RESULTS) {
-                setTimeout(function () {
-                    Toast.fire({
-                        icon: 'error',
-                        html: `Error al obtener las coordenadas. Revisar la ortografía.`,
-                    })
-                    botonCoordenadas.innerHTML = "Obtener Coordenadas"
-                }, 2000)
-            }
-        })
-}
+function obtenerCoordenadas(inputAddress, callback) {
+    const direccion = encodeURIComponent(inputAddress.venue.name);
+    const url = `https://nominatim.openstreetmap.org/search?q=${direccion}&format=json`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const firstResult = data[0];
+          const lat = parseFloat(firstResult.lat);
+          const lon = parseFloat(firstResult.lon);
+          callback({ latitud: lat, longitud: lon });
+        } else {
+          callback({ latitud: null, longitud: null });
+        }
+      })
+      .catch(error => {
+        console.error("Error al buscar la dirección:", error);
+        callback({ latitud: null, longitud: null });
+      });
+  }
+
+function obtenerCoordenadas(inputAddress, callback) {
+    const direccion = encodeURIComponent(inputAddress.venue.name);
+    const url = `https://nominatim.openstreetmap.org/search?q=${direccion}&format=json`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const firstResult = data[0];
+          const lat = parseFloat(firstResult.lat);
+          const lon = parseFloat(firstResult.lon);
+          callback({ latitud: lat, longitud: lon });
+        } else {
+          callback({ latitud: null, longitud: null });
+        }
+      })
+      .catch(error => {
+        console.error("Error al buscar la dirección:", error);
+        callback({ latitud: null, longitud: null });
+      });
+  }
+
+  function buscarCoordenadas(inputAddress, callback) {
+    const direccion = encodeURIComponent(inputAddress);
+  
+    Toast.fire({
+      icon: 'info',
+      html: `Buscando...`,
+    });
+  
+    const url = `https://nominatim.openstreetmap.org/search?q=${direccion}&format=json`;
+  
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const firstResult = data[0];
+          const lat = parseFloat(firstResult.lat);
+          const lon = parseFloat(firstResult.lon);
+          callback({ latitud: lat, longitud: lon });
+        } else {
+          Toast.fire({
+            icon: 'error',
+            html: `Error al obtener las coordenadas. Revisar la ortografía.`,
+          });
+          botonCoordenadas.innerHTML = "Obtener Coordenadas";
+        }
+      })
+      .catch(error => {
+        console.error("Error al buscar la dirección:", error);
+        Toast.fire({
+          icon: 'error',
+          html: `Error al obtener las coordenadas. Revisar la ortografía.`,
+        });
+        botonCoordenadas.innerHTML = "Obtener Coordenadas";
+      });
+  }
+  
 
 /**
  * Función que agrega equipo de forma local en el LocalStorage.
